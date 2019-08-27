@@ -172,7 +172,7 @@ class MeasurementTable extends Component {
 }
 
 const connectedComponent = withTranslation(['MeasurementTable', 'Common'])(
-  MeasurementTable
+    MeasurementTable
 );
 export { connectedComponent as MeasurementTable };
 export default connectedComponent;

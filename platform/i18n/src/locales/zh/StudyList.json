@@ -4,5 +4,10 @@
   "PatientName": "患者姓名",
   "StudyDate": "检查日期",
   "StudyDescription": "描述",
-  "StudyList": "检查列表"
+  "StudyList": "检查列表",
+  "MRN": "患者编号",
+  "AccessionNumber": "检查编号",
+  "No matching results": "暂无数据",
+  "There was an error fetching studies": "数据获取异常",
+  "Today": "今日"
 }

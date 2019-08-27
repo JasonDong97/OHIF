@@ -5,10 +5,11 @@ import SimpleDialog from '../SimpleDialog/SimpleDialog.js';
 
 import bounding from '../../lib/utils/bounding.js';
 import { getDialogStyle } from './../Labelling/labellingPositionUtils.js';
+import { withTranslation } from 'react-i18next';
 
 import './EditDescriptionDialog.css';
 
-export default class EditDescriptionDialog extends Component {
+class EditDescriptionDialog extends Component {
   static defaultProps = {
     componentRef: React.createRef(),
     componentStyle: {},
@@ -49,7 +50,7 @@ export default class EditDescriptionDialog extends Component {
 
     return (
       <SimpleDialog
-        headerTitle="Edit Description"
+        headerTitle={this.props.t('Edit Description')}
         onClose={this.onClose}
         onConfirm={this.onConfirm}
         rootClass="editDescriptionDialog"
@@ -81,3 +82,4 @@ export default class EditDescriptionDialog extends Component {
     this.setState({ description: event.target.value });
   };
 }
+export default withTranslation('MeasurementTable')(EditDescriptionDialog)

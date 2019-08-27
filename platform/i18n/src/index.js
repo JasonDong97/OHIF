@@ -36,8 +36,10 @@ const config = (window.config && window.config.i18n) || {};
 const locizeOptions = {
   projectId: config.LOCIZE_PROJECTID,
   apiKey: config.LOCIZE_API_KEY,
-  referenceLng: 'en-US',
-  fallbacklng: 'en-US',
+  // referenceLng: 'en-US',
+  // fallbacklng: 'en-US',
+  referenceLng: 'zh-CN',
+  fallbacklng: 'zh-CN',
 };
 
 const envUseLocize = !!config.USE_LOCIZE;
@@ -74,7 +76,8 @@ function initI18n(
       // init i18next
       // for all options read: https://www.i18next.com/overview/configuration-options
       .init({
-        fallbackLng: 'en-US',
+        // fallbackLng: 'en-US',
+        fallbackLng: 'zh-CN',
         saveMissing: apiKeyAvailable,
         debug: debugMode,
         keySeparator: false,
@@ -111,7 +114,8 @@ function initI18n(
       // init i18next
       // for all options read: https://www.i18next.com/overview/configuration-options
       .init({
-        fallbackLng: 'en-US',
+        // fallbackLng: 'en-US',
+        fallbackLng: 'zh-CN',
         resources: locales,
         debug: debugMode,
         keySeparator: false,

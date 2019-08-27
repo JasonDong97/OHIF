@@ -10,7 +10,6 @@ class ThumbnailEntry extends Component {
     error: false,
     stackPercentComplete: 0,
   };
-
   static propTypes = {
     id: PropTypes.string.isRequired,
     imageSrc: PropTypes.string,
@@ -34,9 +33,13 @@ class ThumbnailEntry extends Component {
 
   render() {
     const hasInstanceNumber = this.props.instanceNumber !== undefined;
-
+    const state = window.store.getState();
+    let active = this.props.active;
+    let viewportSpecificData = state.viewports.viewportSpecificData && state.viewports.viewportSpecificData[0] || {};
+    active = viewportSpecificData.seriesNumber == this.props.seriesNumber &&
+      viewportSpecificData.displaySetInstanceUid == this.props.displaySetInstanceUid;
     let className = classnames('ThumbnailEntry noselect', {
-      active: this.props.active,
+      active: active,
     });
     const infoOnly = false;
 

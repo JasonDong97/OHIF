@@ -6,9 +6,7 @@ import 'react-dates/lib/css/_datepicker.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DateRangePicker } from 'react-dates';
-
 import './CustomDateRangePicker.styl';
-
 export default class CustomDateRangePicker extends React.Component {
   static propTypes = {
     presets: PropTypes.arrayOf(

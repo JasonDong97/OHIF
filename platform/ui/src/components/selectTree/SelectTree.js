@@ -7,8 +7,9 @@ import InputRadio from './InputRadio.js';
 import PropTypes from 'prop-types';
 import SelectTreeBreadcrumb from './SelectTreeBreadcrumb.js';
 import cloneDeep from 'lodash.clonedeep';
+import { withTranslation } from '../../utils/LanguageProvider';
 
-export class SelectTree extends Component {
+class SelectTree extends Component {
   static propTypes = {
     autoFocus: PropTypes.bool,
     searchEnabled: PropTypes.bool,
@@ -86,15 +87,17 @@ export class SelectTree extends Component {
       if (Array.isArray(item.items)) {
         item.items.forEach(item => {
           const label = item.label.toLowerCase();
+          const tlabel = this.props.t(item.label);
           const searchTerm = this.state.searchTerm.toLowerCase();
-          if (label.indexOf(searchTerm) !== -1) {
+          if (label.indexOf(searchTerm) !== -1 || tlabel.indexOf(searchTerm) !== -1) {
             filteredItems.push(item);
           }
         });
       } else {
         const label = item.label.toLowerCase();
+        const tlabel = this.props.t(item.label);
         const searchTerm = this.state.searchTerm.toLowerCase();
-        if (label.indexOf(searchTerm) !== -1) {
+        if (label.indexOf(searchTerm) !== -1 || tlabel.indexOf(searchTerm) !== -1) {
           filteredItems.push(item);
         }
       }
@@ -113,7 +116,6 @@ export class SelectTree extends Component {
     } else {
       treeItems = cloneDeep(this.props.items);
     }
-
     return treeItems.map((item, index) => {
       let itemKey = index;
       if (this.state.currentNode) {
@@ -126,7 +128,7 @@ export class SelectTree extends Component {
           name={index}
           itemData={item}
           value={item.value}
-          label={item.label}
+          label={this.props.t(item.label)}
           labelClass={this.getLabelClass(item)}
           onSelected={this.onSelected}
         />
@@ -151,7 +153,7 @@ export class SelectTree extends Component {
             <input
               type="text"
               className="searchInput"
-              placeholder="Search labels"
+              placeholder={this.props.t('Search labels')}
               autoFocus={this.props.autoFocus}
               onChange={this.searchLocations}
               value={this.state.searchTerm ? this.state.searchTerm : ''}
@@ -190,3 +192,5 @@ export class SelectTree extends Component {
     });
   };
 }
+const connectedComponent = withTranslation('Labelling')(SelectTree);
+export { connectedComponent as SelectTree};

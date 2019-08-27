@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './SimpleDialog.css';
+import { withTranslation } from 'react-i18next';
 
 class SimpleDialog extends Component {
   static defaultProps = {
@@ -31,14 +32,14 @@ class SimpleDialog extends Component {
               className="btn btn-cancel"
               onClick={this.props.onClose}
             >
-              Cancel
+              {this.props.t('Cancel')}
             </button>
             <button
               type="button"
               className="btn btn-confirm"
               onClick={this.props.onConfirm}
             >
-              Confirm
+              {this.props.t('Confirm')}
             </button>
           </div>
         </form>
@@ -53,4 +54,4 @@ SimpleDialog.propTypes = {
   onConfirm: PropTypes.func.isRequired,
 };
 
-export default SimpleDialog;
+export default withTranslation('MeasurementTable')(SimpleDialog);

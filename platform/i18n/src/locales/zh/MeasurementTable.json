@@ -5,5 +5,16 @@
   "MAX": "最大",
   "NonTargets": "非靶向",
   "Relabel": "重新标记",
-  "Targets": "靶向"
+  "Targets": "靶向",
+  "StudyDate": "日期",
+  "Measurements": "测量值",
+  "Delete measurement": "删除测量值",
+  "Edit Description": "编辑描述",
+  "Add Description": "新增描述",
+  "Assign Label": "标记列表",
+  "Save": "保存",
+  "Cancel": "取消",
+  "Confirm": "确认",
+  "Edit Label": "编辑标记",
+  "Add Label": "新增标记"
 }

@@ -96,7 +96,7 @@ async function handleSegmentationStorage(
   }
 
   const referenceDisplaySet = displaySets[0];
-  const imageIds = referenceDisplaySet.images.map(image => image.getImageId());
+  const imageIds = referenceDisplaySet && referenceDisplaySet.images.map(image => image.getImageId()) || [];
   const results = parseSeg(arrayBuffer, imageIds);
 
   if (!results) {

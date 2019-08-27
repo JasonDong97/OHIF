@@ -11,15 +11,36 @@ class StudyBrowser extends Component {
   };
 
   static propTypes = {
+    metas: PropTypes.array,
     studies: PropTypes.array.isRequired,
     supportsDragAndDrop: PropTypes.bool.isRequired,
-    onThumbnailClick: PropTypes.func,
-    onThumbnailDoubleClick: PropTypes.func,
+    setViewportSpecificData: PropTypes.func.isRequired,
+    clearViewportSpecificData: PropTypes.func.isRequired,
   };
+  findDisplaySet(studies, studyInstanceUid, displaySetInstanceUid) {
+    const study = studies.find(study => {
+      return study.studyInstanceUid === studyInstanceUid;
+    });
 
+    if (!study) {
+      return;
+    }
+
+    return study.displaySets.find(displaySet => {
+      return displaySet.displaySetInstanceUid === displaySetInstanceUid;
+    });
+  }
+  onThumbnailClick(study, thumb){
+    const displaySet = this.findDisplaySet(
+      this.props.metas,
+      study.studyInstanceUid,
+      thumb.displaySetInstanceUid
+    );
+    this.props.setViewportSpecificData(0, displaySet);
+  };
   render() {
     const studies = this.props.studies;
-
+    const metas = this.props.metas;
     const thumbnails = studies.map((study, studyIndex) => {
       return study.thumbnails.map((thumb, thumbIndex) => {
         if (this.props.supportsDragAndDrop) {
@@ -29,8 +50,8 @@ class StudyBrowser extends Component {
               {...study}
               {...thumb}
               id={`${studyIndex}_${thumbIndex}`}
-              onClick={this.props.onThumbnailClick}
-              onDoubleClick={this.props.onThumbnailDoubleClick}
+              onClick={()=>this.onThumbnailClick(study, thumb)}
+              onDoubleClick={this.onThumbnailDoubleClick}
             />
           );
         } else {
@@ -41,8 +62,8 @@ class StudyBrowser extends Component {
                 {...study}
                 {...thumb}
                 id={`${studyIndex}_${thumbIndex}`}
-                onClick={this.props.onThumbnailClick}
-                onDoubleClick={this.props.onThumbnailDoubleClick}
+                onClick={()=>this.onThumbnailClick(study, thumb)}
+                onDoubleClick={this.onThumbnailDoubleClick}
               />
             </div>
           );
@@ -51,10 +72,32 @@ class StudyBrowser extends Component {
     });
 
     const components = thumbnails.flat();
+    const studyInfo =()=>{
+      if (metas && metas.length){
+        return (
+          <div className="studyInfo">
+            <h2>{metas[0].patientName}</h2>
+            <div>
+              <label>年龄：</label>
+              <span>{metas[0].patientAge || ''}</span>
+            </div>
+            <div>
+              <label>编号：</label>
+              <span>{metas[0].patientId}</span>
+            </div>
+          </div>
+        )
+      } else{
+        return ''
+      }
+    }
     return (
-      <div className="StudyBrowser">
-        <div className="scrollable-study-thumbnails">{components}</div>
-      </div>
+      <>
+        {studyInfo()}
+        <div className="StudyBrowser">
+          <div className="scrollable-study-thumbnails">{components}</div>
+        </div>
+      </>
     );
   }
 }

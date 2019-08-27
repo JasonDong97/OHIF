@@ -27,7 +27,7 @@ export {
   HotkeysManager,
   ImageSet,
   StudyPrefetcher,
-  //StudyLoadingListener,
+  StudyLoadingListener,
   StackLoadingListener,
   DICOMFileLoadingListener,
   StudyMetadata,

@@ -48,6 +48,7 @@ module.exports = (env, argv) => {
       // Generate "index.html" w/ correct includes/imports
       new HtmlWebpackPlugin({
         template: `${PUBLIC_DIR}/index.html`,
+        favicon:`${PUBLIC_DIR}/assets/favicon.png`,
         filename: 'index.html',
         templateParameters: {
           PUBLIC_URL: PUBLIC_URL,

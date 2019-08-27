@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cornerstone from 'cornerstone-core';
 import cornerstoneTools from 'cornerstone-tools';
 import getMeasurementLocationCallback from '../lib/getMeasurementLocationCallback';
+import { withTranslation } from 'react-i18next';
 
 import './ToolContextMenu.css';
 
@@ -150,6 +151,7 @@ class ToolContextMenu extends Component {
     onClose: PropTypes.func,
     availableTools: PropTypes.array,
     visible: PropTypes.bool.isRequired,
+    t: PropTypes.func,
   };
 
   static defaultProps = {
@@ -191,7 +193,7 @@ class ToolContextMenu extends Component {
       return (
         <li key={item.actionType}>
           <button className="form-action" onClick={itemOnClick}>
-            <span key={item.actionType}>{item.text}</span>
+            <span key={item.actionType}>{this.props.t(item.text)}</span>
           </button>
         </li>
       );
@@ -250,4 +252,4 @@ class ToolContextMenu extends Component {
   };
 }
 
-export default ToolContextMenu;
+export default withTranslation('MeasurementTable')(ToolContextMenu);

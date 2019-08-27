@@ -30,7 +30,7 @@ class ExpandableToolMenu extends React.Component {
       }),
     ]),
     onGroupMenuClick: PropTypes.func,
-    activeCommand: PropTypes.string,
+    activeCommand: PropTypes.string
   };
 
   static defaultProps = {
@@ -114,8 +114,8 @@ class ExpandableToolMenu extends React.Component {
         trigger="click"
         placement="bottom"
         rootClose={true}
+        OverlayShown={this.state.isExpanded}
         handleHide={this.onOverlayHide}
-        onClick={this.onExpandableToolClick}
         overlay={this.toolbarMenuOverlay()}
       >
         <ToolbarButton
@@ -126,6 +126,7 @@ class ExpandableToolMenu extends React.Component {
           className={'toolbar-button expandableToolMenu'}
           isActive={this.isActive()}
           isExpandable={true}
+          onOverlayHide={this.onExpandableToolClick}
           isExpanded={this.state.isExpanded}
         />
       </OverlayTrigger>

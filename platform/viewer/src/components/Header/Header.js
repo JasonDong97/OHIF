@@ -4,10 +4,10 @@ import './Header.css';
 import { Link, withRouter } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import { Dropdown } from '@ohif/ui';
+// import { Dropdown } from '@ohif/ui';
 import OHIFLogo from '../OHIFLogo/OHIFLogo.js';
 import PropTypes from 'prop-types';
-import { AboutModal } from '@ohif/ui';
+// import { AboutModal } from '@ohif/ui';
 import { hotkeysManager } from './../../App.js';
 import { withTranslation } from 'react-i18next';
 
@@ -15,14 +15,14 @@ class Header extends Component {
   static propTypes = {
     home: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
-    children: PropTypes.node,
+    children: PropTypes.func.isRequired,
     t: PropTypes.func.isRequired,
     userManager: PropTypes.object
   };
 
   static defaultProps = {
     home: true,
-    children: OHIFLogo(),
+    children:(params)=> OHIFLogo(params),
   };
 
   // onSave: data => {
@@ -98,7 +98,7 @@ class Header extends Component {
             </Link>
           )}
 
-          {this.props.children}
+          {this.props.children(showStudyList && !this.props.home)}
 
           {showStudyList && !this.props.home && (
             <Link
@@ -113,18 +113,18 @@ class Header extends Component {
           )}
         </div>
 
-        <div className="header-menu">
-          <span className="research-use">{t('INVESTIGATIONAL USE ONLY')}</span>
-          <Dropdown title={t('Options')} list={this.options} align="right" />
-          <AboutModal
-            {...this.state}
-            onCancel={() =>
-              this.setState({
-                isOpen: false,
-              })
-            }
-          />
-        </div>
+        {/*<div className="header-menu">*/}
+        {/*  <span className="research-use">{t('INVESTIGATIONAL USE ONLY')}</span>*/}
+        {/*  <Dropdown title={t('Options')} list={this.options} align="right" />*/}
+        {/*  <AboutModal*/}
+        {/*    {...this.state}*/}
+        {/*    onCancel={() =>*/}
+        {/*      this.setState({*/}
+        {/*        isOpen: false,*/}
+        {/*      })*/}
+        {/*    }*/}
+        {/*  />*/}
+        {/*</div>*/}
       </div>
     );
   }

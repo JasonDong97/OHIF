@@ -16,11 +16,11 @@ const thumbnailSource = {
   },*/
 
   beginDrag(props) {
-    return props;
+    return Object.assign({active: true}, props);
   },
 
   endDrag(props, monitor) {
-    //const item = monitor.getItem();
+    // const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
 
     if (dropResult) {

@@ -94,6 +94,8 @@ const propTypes = {
    * @private
    */
   show: PropTypes.oneOf([null]),
+  OverlayShown: PropTypes.bool,
+
 };
 
 const defaultProps = {
@@ -225,7 +227,7 @@ class OverlayTrigger extends React.Component {
     return (
       <Overlay
         {...props}
-        show={this.state.show}
+        show={this.props.OverlayShown}
         onHide={this.handleHide}
         target={this}
       >

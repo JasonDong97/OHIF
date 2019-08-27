@@ -7,12 +7,12 @@ import { Icon } from './../../elements/Icon';
 import { PaginationArea } from './PaginationArea.js';
 import PropTypes from 'prop-types';
 import { StudyListLoadingText } from './StudyListLoadingText.js';
-import { StudylistToolbar } from './StudyListToolbar.js';
+// import { StudylistToolbar } from './StudyListToolbar.js';
 import { isInclusivelyBeforeDay } from 'react-dates';
 import moment from 'moment';
 import debounce from 'lodash.debounce';
 import { withTranslation } from '../../utils/LanguageProvider';
-
+moment.locale('zh-cn')
 const today = moment();
 const lastWeek = moment().subtract(7, 'day');
 const lastMonth = moment().subtract(1, 'month');
@@ -42,17 +42,17 @@ class StudyList extends Component {
 
   static studyDatePresets = [
     {
-      text: 'Today',
+      text: '今日',
       start: today,
       end: today,
     },
     {
-      text: 'Last 7 days',
+      text: '最近一周',
       start: lastWeek,
       end: today,
     },
     {
-      text: 'Last 30 days',
+      text: '最近一个月',
       start: lastMonth,
       end: today,
     },
@@ -156,14 +156,14 @@ class StudyList extends Component {
 
   renderNoMachingResults() {
     if (!this.props.studies.length && !this.state.error) {
-      return <div className="notFound">No matching results</div>;
+      return <div className="notFound">{this.props.t('No matching results')}</div>;
     }
   }
 
   renderHasError() {
     if (this.state.error) {
       return (
-        <div className="notFound">There was an error fetching studies</div>
+        <div className="notFound">{this.props.t('There was an error fetching studies')}</div>
       );
     }
   }
@@ -297,18 +297,18 @@ class StudyList extends Component {
 
     return (
       <div className="StudyList">
-        <div className="studyListToolbar clearfix">
-          <div className="header pull-left">{this.props.t('StudyList')}</div>
-          <div className="studyCount pull-right">
-            {this.props.studies.length}
-          </div>
-          <div className="pull-right">
-            {this.props.studyListFunctionsEnabled ? (
-              <StudylistToolbar onImport={this.props.onImport} />
-            ) : null}
-          </div>
-          {this.props.children}
-        </div>
+        {/*<div className="studyListToolbar clearfix">*/}
+        {/*  <div className="header pull-left">{this.props.t('StudyList')}</div>*/}
+        {/*  <div className="studyCount pull-right">*/}
+        {/*    {this.props.studies.length}*/}
+        {/*  </div>*/}
+        {/*  <div className="pull-right">*/}
+        {/*    {this.props.studyListFunctionsEnabled ? (*/}
+        {/*      <StudylistToolbar onImport={this.props.onImport} />*/}
+        {/*    ) : null}*/}
+        {/*  </div>*/}
+        {/*  {this.props.children}*/}
+        {/*</div>*/}
         <div className="theadBackground" />
         <div id="studyListContainer">
           <table id="tblStudyList" className="studylistResult table noselect">
@@ -374,7 +374,7 @@ class StudyList extends Component {
                                     },
                                     this.search
                                   );
-                                  this.setState({ focusedInput: false });
+                                  this.setState({ focusedInput: 'endDate' });
                                 } else if (!startDate && !endDate) {
                                   this.setSearchDataBatch(
                                     {

@@ -4,11 +4,14 @@
 }
 
 .entry-header.header-big {
-  background: rgba(21,25,30,0.7);
+  background: rgba(21,25,30,1);
   padding: 10px var(--study-list-padding);
   height: auto;
   display: inline-block;
   width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99;
 }
 
 .header-left-box {
@@ -29,7 +32,7 @@
 
 .entry-header.header-big .header-brand {
   height: auto;
-  padding: 25px 0;
+  /*padding: 25px 0;*/
 }
 
 
@@ -53,12 +56,13 @@
   font-size: 14px;
   font-weight: var(--logo-font-weight);
   color: var(--text-primary-color);
-  line-height: 30px;
+  /*line-height: 30px;*/
 }
 
 .entry-header.header-big .header-logo-text {
   font-size: 30px;
-  line-height: 36px;
+  height: 50px;
+  line-height: 50px;
 }
 
 .header-btn {

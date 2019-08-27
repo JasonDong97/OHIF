@@ -7,8 +7,9 @@ import PropTypes from 'prop-types';
 import bounding from '../../lib/utils/bounding.js';
 import cloneDeep from 'lodash.clonedeep';
 import { getAddLabelButtonStyle } from './labellingPositionUtils.js';
+import { withTranslation } from 'react-i18next';
 
-export default class LabellingFlow extends Component {
+class LabellingFlow extends Component {
   static propTypes = {
     eventData: PropTypes.object.isRequired,
     measurementData: PropTypes.object.isRequired,
@@ -118,9 +119,8 @@ export default class LabellingFlow extends Component {
           <button
             type="button"
             className="addLabelButton"
-            onClick={this.showLabelling}
-          >
-            {this.state.location ? 'Edit' : 'Add'} Label
+            onClick={this.showLabelling}>
+            {this.props.t(`${this.state.location ? 'Edit' : 'Add'} Label`)}
           </button>
         </>
       );
@@ -131,9 +131,8 @@ export default class LabellingFlow extends Component {
             items={this.currentItems}
             columns={1}
             onSelected={this.selectTreeSelectCalback}
-            selectTreeFirstTitle="Assign Label"
-            onComponentChange={this.repositionComponent}
-          />
+            selectTreeFirstTitle={this.props.t('Assign Label')}
+            onComponentChange={this.repositionComponent}/>
         );
       } else {
         return (
@@ -142,7 +141,7 @@ export default class LabellingFlow extends Component {
               className="checkIconWrapper"
               onClick={this.fadeOutAndLeaveFast}
             >
-              <Icon name="check" className="checkIcon" />
+              <Icon name="check" className="checkIcon"/>
             </div>
             <div className="locationDescriptionWrapper">
               <div className="location">{locationLabel}</div>
@@ -161,15 +160,14 @@ export default class LabellingFlow extends Component {
                 className="commonButton left"
                 onClick={this.relabel}
               >
-                Relabel
+                {this.props.t('Relabel')}
               </button>
               <button
                 type="button"
                 className="commonButton right"
                 onClick={this.setDescriptionUpdateMode}
               >
-                {description ? 'Edit ' : 'Add '}
-                Description
+                {this.props.t(`${description ? 'Edit ' : 'Add '}Description`)}
               </button>
             </div>
             <div className="editDescriptionButtons">
@@ -178,14 +176,14 @@ export default class LabellingFlow extends Component {
                 className="commonButton left"
                 onClick={this.descriptionCancel}
               >
-                Cancel
+                {this.props.t('Cancel')}
               </button>
               <button
                 type="button"
                 className="commonButton right"
                 onClick={this.descriptionSave}
               >
-                Save
+                {this.props.t('Save')}
               </button>
             </div>
           </>
@@ -234,7 +232,7 @@ export default class LabellingFlow extends Component {
   };
 
   selectTreeSelectCalback = (event, itemSelected) => {
-    const location = itemSelected.value;
+    const location = this.props.t(itemSelected.value);
     this.props.updateLabelling({ location });
 
     const viewportTopPosition = this.mainElement.current.offsetParent.offsetTop;
@@ -246,8 +244,8 @@ export default class LabellingFlow extends Component {
     this.setState({
       editLocation: false,
       confirmationState: true,
-      location: itemSelected.value,
-      locationLabel: itemSelected.label,
+      location: location,
+      locationLabel: this.props.t(itemSelected.label),
       componentStyle,
     });
 
@@ -307,11 +305,13 @@ export default class LabellingFlow extends Component {
     // SetTimeout for the css animation to end.
     setTimeout(() => {
       bounding(this.mainElement);
-      if (this.state.editLocation) {
-        this.mainElement.current.style.maxHeight = '70vh';
+      let $current = this.mainElement.current;
+      if (this.state.editLocation && $current) {
+        $current.style.maxHeight = '70vh';
         const top = this.calculateTopDistance();
-        this.mainElement.current.style.top = `${top}px`;
+        $current.style.top = `${top}px`;
       }
     }, 200);
   };
 }
+export default withTranslation('Labelling')(LabellingFlow)

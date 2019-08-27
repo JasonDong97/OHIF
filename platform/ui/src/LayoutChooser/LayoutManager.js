@@ -49,7 +49,6 @@ export class LayoutManager extends Component {
     studies: PropTypes.array,
     children: PropTypes.node,
   };
-
   onDrop = ({ viewportIndex, item }) => {
     if (this.props.setViewportData) {
       this.props.setViewportData({ viewportIndex, item });
@@ -78,6 +77,7 @@ export class LayoutManager extends Component {
 
       return (
         <PluginComponent
+          ref={this.mainElement}
           viewportData={data}
           viewportIndex={viewportIndex}
           children={[children]}
@@ -147,7 +147,6 @@ export class LayoutManager extends Component {
       if (this.props.activeViewportIndex === viewportIndex) {
         className += ' active';
       }
-
       return (
         <div key={viewportIndex} className={className} style={{ ...layout }}>
           {content}

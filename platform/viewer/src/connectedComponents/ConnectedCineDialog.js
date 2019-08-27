@@ -13,11 +13,10 @@ const { setViewportSpecificData } = OHIF.redux.actions;
 // Why do I need or care about any of this info?
 // A dispatch action should be able to pull this at the time of an event?
 // `isPlaying` and `cineFrameRate` might matter, but I think we can prop pass for those.
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   // Get activeViewport's `cine` and `stack`
   const { viewportSpecificData, activeViewportIndex } = state.viewports;
   const { cine, dom } = viewportSpecificData[activeViewportIndex] || {};
-
   const cineData = cine || {
     isPlaying: false,
     cineFrameRate: 24,
@@ -45,18 +44,21 @@ const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
     activeViewportCineData,
     activeViewportIndex,
   } = propsFromState;
+  const onPlayPauseChanged = isPlaying => {
+    const cine = cloneDeep(activeViewportCineData);
+    cine.isPlaying = isPlaying != undefined ? isPlaying: !cine.isPlaying;
 
+    propsFromDispatch.dispatchSetViewportSpecificData(activeViewportIndex, {
+      cine,
+    });
+  };
+  if(!ownProps.isPlaying && ownProps.isPlaying != activeViewportCineData.isPlaying){
+    onPlayPauseChanged(false);
+  }
   return {
     cineFrameRate: activeViewportCineData.cineFrameRate,
     isPlaying: activeViewportCineData.isPlaying,
-    onPlayPauseChanged: isPlaying => {
-      const cine = cloneDeep(activeViewportCineData);
-      cine.isPlaying = !cine.isPlaying;
-
-      propsFromDispatch.dispatchSetViewportSpecificData(activeViewportIndex, {
-        cine,
-      });
-    },
+    onPlayPauseChanged: onPlayPauseChanged,
     onFrameRateChanged: frameRate => {
       const cine = cloneDeep(activeViewportCineData);
       cine.cineFrameRate = frameRate;

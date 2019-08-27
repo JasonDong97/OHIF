@@ -41,7 +41,6 @@ const collector = monitor => {
       stackPercentComplete: item.stackPercentComplete,
     };
   }
-
   return {
     ...newItem,
     isDragging: monitor.isDragging(),
@@ -81,5 +80,4 @@ class DragPreview extends PureComponent {
 DragPreview.propTypes = {
   isDragging: PropTypes.bool,
 };
-
 export default DragLayer(collector)(memo(DragPreview));

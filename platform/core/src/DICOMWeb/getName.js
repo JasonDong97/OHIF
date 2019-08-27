@@ -18,7 +18,7 @@ export default function getName(element, defaultValue) {
     return defaultValue;
   }
   // Return the Alphabetic component group
-  if (element.Value[0].Alphabetic) {
+  if (element.Value[0] && element.Value[0].Alphabetic) {
     return element.Value[0].Alphabetic;
   }
   // Orthanc does not return PN properly so this is a temporary workaround

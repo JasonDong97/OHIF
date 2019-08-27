@@ -10,11 +10,12 @@ import { commandsManager, extensionManager } from './../App.js';
 
 import ConnectedCineDialog from './ConnectedCineDialog';
 import ConnectedLayoutButton from './ConnectedLayoutButton';
+import ConnectedExitButton from './ConnectedExitButton';
 import ConnectedPluginSwitch from './ConnectedPluginSwitch.js';
-import { MODULE_TYPES } from '@ohif/core';
+import OHIF, { MODULE_TYPES } from '@ohif/core';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
-
+const VTK = "ACTIVE_VIEWPORT::VTK";
 class ToolbarRow extends Component {
   // TODO: Simplify these? isOpen can be computed if we say "any" value for selected,
   // closed if selected is null/undefined
@@ -43,6 +44,7 @@ class ToolbarRow extends Component {
       toolbarButtons: toolbarButtonDefinitions,
       activeButtons: [],
       isCineDialogOpen: false,
+      isShowExit: false
     };
 
     this._handleBuiltIn = _handleBuiltIn.bind(this);
@@ -75,7 +77,7 @@ class ToolbarRow extends Component {
           const menuOptionEntry = {
             value: menuOption.target,
             icon: menuOption.icon,
-            bottomLabel: menuOption.label,
+            bottomLabel: this.props.t(menuOption.label),
           };
           const from = menuOption.from || 'right';
 
@@ -86,12 +88,13 @@ class ToolbarRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const activeContexts = this.props.activeContexts;
     const activeContextsChanged =
-      prevProps.activeContexts !== this.props.activeContexts;
-
+      prevProps.activeContexts !== activeContexts;
     if (activeContextsChanged) {
       this.setState({
         toolbarButtons: _getVisibleToolbarButtons.call(this),
+        isShowExit: activeContexts.findIndex((x)=>x==VTK)>-1
       });
     }
   }
@@ -115,7 +118,6 @@ class ToolbarRow extends Component {
     };
     const onPressLeft = onPress.bind(this, 'left');
     const onPressRight = onPress.bind(this, 'right');
-
     return (
       <>
         <div className="ToolbarRow">
@@ -127,8 +129,18 @@ class ToolbarRow extends Component {
             />
           </div>
           {buttonComponents}
-          <ConnectedLayoutButton />
-          <ConnectedPluginSwitch />
+          {!this.state.isShowExit && (
+            <ConnectedLayoutButton/>
+          )}
+          {!this.state.isShowExit ?
+            <ConnectedPluginSwitch/>
+            :
+            <ConnectedExitButton onExit={()=>{
+              this.setState({
+                isShowExit: false,
+              });
+            }}/>
+          }
           <div
             className="pull-right m-t-1 rm-x-1"
             style={{ marginLeft: 'auto' }}
@@ -143,7 +155,7 @@ class ToolbarRow extends Component {
           </div>
         </div>
         <div className="CineDialogContainer" style={cineDialogContainerStyle}>
-          <ConnectedCineDialog />
+          <ConnectedCineDialog isPlaying={this.state.isCineDialogOpen}/>
         </div>
       </>
     );
@@ -155,7 +167,22 @@ class ToolbarRow extends Component {
  * active, and what their onClick behavior should be.
  */
 function _getButtonComponents(toolbarButtons, activeButtons) {
-  return toolbarButtons.map((button, index) => {
+  let btns = [];
+  const _handleCineDialog =()=>{
+    this.setState({
+      isCineDialogOpen: false,
+      isShowExit: true
+    });
+  }
+  toolbarButtons.forEach(tmp=>{
+    if(tmp.buttons && tmp.buttons.length){
+      tmp.buttons.forEach(e=>btns.push(e));
+    }
+    if(tmp.id!='StackScroll' && tmp.id!="More"){
+      btns.push(tmp);
+    }
+  });
+  return btns.map((button, index) => {
     let activeCommand = undefined;
 
     if (button.buttons && button.buttons.length) {
@@ -173,7 +200,7 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
       return (
         <ExpandableToolMenu
           key={button.id}
-          text={button.label}
+          label={button.label}
           icon={button.icon}
           buttons={childButtons}
           activeCommand={activeCommand}
@@ -186,6 +213,7 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
         label={button.label}
         icon={button.icon}
         onClick={_handleToolbarButtonClick.bind(this, button)}
+        onCineDialogOpen={_handleCineDialog}
         isActive={activeButtons.includes(button.id)}
       />
     );
@@ -224,18 +252,15 @@ function _handleToolbarButtonClick(button, evt, props) {
 function _getVisibleToolbarButtons() {
   const toolbarModules = extensionManager.modules[MODULE_TYPES.TOOLBAR];
   const toolbarButtonDefinitions = [];
-
   toolbarModules.forEach(extension => {
     const { definitions, defaultContext } = extension.module;
     definitions.forEach(definition => {
       const context = definition.context || defaultContext;
-
       if (this.props.activeContexts.includes(context)) {
         toolbarButtonDefinitions.push(definition);
       }
     });
   });
-
   return toolbarButtonDefinitions;
 }
 
@@ -246,5 +271,4 @@ function _handleBuiltIn({ behavior } = {}) {
     });
   }
 }
-
 export default withTranslation('Common')(ToolbarRow);

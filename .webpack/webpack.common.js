@@ -94,6 +94,13 @@ module.exports = (env, argv, { SRC_DIR, DIST_DIR }) => {
           include: /vtk\.js[\/\\]Sources/,
           loader: 'shader-loader',
         },
+        {
+          test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+          loader: 'url-loader',
+          options: {
+            limit: 10000
+          }
+        },
       ],
     },
     resolve: {

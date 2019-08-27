@@ -10,6 +10,8 @@ window.config = {
         wadoUriRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/wado',
         qidoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
         wadoRoot: 'https://server.dcmjs.org/dcm4chee-arc/aets/DCM4CHEE/rs',
+        // qidoRoot: 'http://192.168.0.162:888/uggcloud/thirdlib/interface/rs',
+        // wadoRoot: 'http://192.168.0.162:888/uggcloud/thirdlib/interface/rs',
         qidoSupportsIncludeField: true,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',

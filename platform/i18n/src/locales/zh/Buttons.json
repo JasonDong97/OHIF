@@ -18,7 +18,7 @@
   "Invert": "灰度反转",
   "Layout": "显示窗口",
   "Length": "长度",
-  "Levels": "层级",
+  "Levels": "窗宽窗位",
   "Magnify": "放大镜",
   "Manual": "手动",
   "Measurements": "测量",
@@ -30,7 +30,7 @@
   "Probe": "探针",
   "ROI Window": "选择对比度",
   "Rectangle": "矩形",
-  "Reset": "复原",
+  "Reset": "重置",
   "Reset to Defaults": "返回默认",
   "Rotate Right": "顺时针旋转",
   "Sagittal": "矢状面",
@@ -38,5 +38,12 @@
   "Stack Scroll": "滑动切换图层",
   "Stop": "停止",
   "Themes": "主题",
-  "Zoom": "放大"
+  "Zoom": "放大",
+  "WWWC": "窗宽窗位",
+  "Rotate": "旋转",
+  "Disable MIP": "禁用MIP",
+  "Enable MIP": "启用MIP",
+  "Increase Slab Thickness": "增加层厚",
+  "Decrease Slab Thickness": "减少层厚",
+  "Exit": "退出"
 }
