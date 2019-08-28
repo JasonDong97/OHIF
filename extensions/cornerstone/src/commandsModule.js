@@ -162,6 +162,16 @@ const actions = {
 
     scroll(enabledElement, -1);
   },
+  referenceViewport:({ viewports }) => {
+    const enabledElement = _getActiveViewportEnabledElement(
+      viewports.viewportSpecificData,
+      viewports.activeViewportIndex
+    );
+
+    if (enabledElement) {
+      cornerstone.reset(enabledElement);
+    }
+  },
 };
 
 const definitions = {
@@ -241,6 +251,11 @@ const definitions = {
   setToolActive: {
     commandFn: actions.setToolActive,
     storeContexts: [],
+    options: {},
+  },
+  referenceViewport: {
+    commandFn: actions.referenceViewport,
+    storeContexts: ['viewports'],
     options: {},
   },
 };

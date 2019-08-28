@@ -104,10 +104,10 @@ export class LayoutManager extends Component {
   }
 
   render() {
-    if (!this.props.viewportData.length) {
+    const _length = this.props.viewportData.length;
+    if (!_length || (window.handleMPRTime && _length!==3)) {
       return '';
     }
-
     const { supportsDragAndDrop, studies, viewportData } = this.props;
     const viewports = this.props.layout.viewports;
     const viewportElements = viewports.map((layout, viewportIndex) => {

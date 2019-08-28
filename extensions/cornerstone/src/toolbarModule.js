@@ -81,6 +81,14 @@ const definitions = [
     commandOptions: { toolName: 'Angle' },
   },
   {
+    id: 'ReferenceLines',
+    label: 'Reference Lines',
+    icon: 'reference-line',
+    //
+    type: TOOLBAR_BUTTON_TYPES.COMMAND,
+    commandName: 'referenceViewport',
+  },
+  {
     id: 'Reset',
     label: 'Reset',
     icon: 'reset',

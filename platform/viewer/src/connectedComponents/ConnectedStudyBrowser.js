@@ -6,7 +6,7 @@ import { commandsManager } from '../App';
 import viewports from '@ohif/core/src/redux/reducers/viewports';
 const {
   setViewportSpecificData,
-  clearViewportSpecificData,
+  clearViewportSpecificData
 } = OHIF.redux.actions;
 // TODO
 // - Determine in which display set is active from Redux (activeViewportIndex and layout viewportData)
@@ -43,9 +43,13 @@ const mapDispatchToProps = (dispatch) => {
       const {viewportSpecificData, activeViewportIndex} = viewports;
       const viewportData = viewportSpecificData[activeViewportIndex]
       if(viewportSpecificData && viewportData && viewportData.plugin ==  "vtk"){
+        window.handleMPRTime = setTimeout(() => {
+          commandsManager.runCommand("mpr2d");
+          clearTimeout(window.handleMPRTime)
+          window.handleMPRTime = null;
+        }, 800);
         dispatch(clearViewportSpecificData());
         dispatch(setViewportSpecificData(viewportIndex, data));
-        commandsManager.runCommand("mpr2d");
       }else {
         dispatch(setViewportSpecificData(viewportIndex, data));
       }

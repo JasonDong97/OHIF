@@ -31,12 +31,13 @@ class StudyBrowser extends Component {
     });
   }
   onThumbnailClick(study, thumb){
+    const activeViewportIndex = window.store.getState().viewports.activeViewportIndex;
     const displaySet = this.findDisplaySet(
       this.props.metas,
       study.studyInstanceUid,
       thumb.displaySetInstanceUid
     );
-    this.props.setViewportSpecificData(0, displaySet);
+    this.props.setViewportSpecificData(activeViewportIndex, displaySet);
   };
   render() {
     const studies = this.props.studies;

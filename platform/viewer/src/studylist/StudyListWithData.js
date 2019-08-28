@@ -197,7 +197,7 @@ class StudyListWithData extends Component {
     if (this.state.error) {
       return <div>Error: {JSON.stringify(this.state.error)}</div>;
     } else if (this.state.studies === null && !this.state.modalComponentId) {
-      return <div>Loading...</div>;
+      return <div>{this.props.t('Loading...')}</div>;
     }
 
     let healthCareApiButtons = null;

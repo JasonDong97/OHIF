@@ -88,6 +88,7 @@ class ToolbarRow extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    if(window.handleMPRTime){return}
     const activeContexts = this.props.activeContexts;
     const activeContextsChanged =
       prevProps.activeContexts !== activeContexts;

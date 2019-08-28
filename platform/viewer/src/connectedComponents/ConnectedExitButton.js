@@ -60,10 +60,10 @@ const mergeProps = (propsFromState, propsFromDispatch, ownProps) => {
   return button;
 };
 
-const ConnectedPluginSwitch = connect(
+const ConnectedExitButton = connect(
   mapStateToProps,
   mapDispatchToProps,
   mergeProps
 )(ToolbarButton);
 
-export default ConnectedPluginSwitch;
+export default ConnectedExitButton;

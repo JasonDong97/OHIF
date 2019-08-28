@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { log, metadata, studies, utils } from "@ohif/core";
-
+import { withTranslation } from 'react-i18next';
 import PropTypes from "prop-types";
 import Viewer from "../connectedComponents/Viewer";
 import { extensionManager } from "./../App.js";
@@ -132,11 +132,11 @@ class StandaloneRouting extends Component {
     if (this.state.error) {
       return <div>Error: {JSON.stringify(this.state.error)}</div>;
     } else if (!this.state.studies) {
-      return <div>Loading...</div>;
+      return <div>{this.props.t('Loading...')}</div>;
     }
 
     return <Viewer studies={this.state.studies} />;
   }
 }
 
-export default StandaloneRouting;
+export default withTranslation('Common')(StandaloneRouting);
