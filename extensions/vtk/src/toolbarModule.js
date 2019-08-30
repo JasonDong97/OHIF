@@ -8,7 +8,7 @@ const definitions = [
     id: 'Crosshairs',
     label: 'Crosshairs',
     icon: 'crosshairs',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'enableCrosshairsTool',
     commandOptions: {},
@@ -17,7 +17,7 @@ const definitions = [
     id: 'WWWC',
     label: 'WWWC',
     icon: 'level',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'enableLevelTool',
     commandOptions: {},
@@ -26,7 +26,7 @@ const definitions = [
     id: 'Rotate',
     label: 'Rotate',
     icon: '3d-rotate',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'enableRotateTool',
     commandOptions: {},
@@ -35,7 +35,7 @@ const definitions = [
     id: 'setBlendModeToComposite',
     label: 'Disable MIP',
     icon: 'times',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'setBlendModeToComposite',
     commandOptions: {},
@@ -44,7 +44,7 @@ const definitions = [
     id: 'setBlendModeToMaximumIntensity',
     label: 'Enable MIP',
     icon: 'soft-tissue',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'setBlendModeToMaximumIntensity',
     commandOptions: {},
@@ -54,7 +54,7 @@ const definitions = [
     id: 'increaseSlabThickness',
     label: 'Increase Slab Thickness',
     icon: 'caret-up',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'increaseSlabThickness',
     commandOptions: {},
@@ -63,7 +63,7 @@ const definitions = [
     id: 'decreaseSlabThickness',
     label: 'Decrease Slab Thickness',
     icon: 'caret-down',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.COMMAND,
     commandName: 'decreaseSlabThickness',
     commandOptions: {},

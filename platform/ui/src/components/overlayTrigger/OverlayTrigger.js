@@ -94,8 +94,6 @@ const propTypes = {
    * @private
    */
   show: PropTypes.oneOf([null]),
-  OverlayShown: PropTypes.bool,
-
 };
 
 const defaultProps = {
@@ -227,7 +225,7 @@ class OverlayTrigger extends React.Component {
     return (
       <Overlay
         {...props}
-        show={this.props.OverlayShown}
+        show={this.state.show}
         onHide={this.handleHide}
         target={this}
       >
@@ -290,9 +288,9 @@ class OverlayTrigger extends React.Component {
       warning(
         !(trigger === 'hover'),
         '[react-bootstrap] Specifying only the `"hover"` trigger limits the ' +
-          'visibility of the overlay to just mouse users. Consider also ' +
-          'including the `"focus"` trigger so that touch and keyboard only ' +
-          'users can see the overlay as well.'
+        'visibility of the overlay to just mouse users. Consider also ' +
+        'including the `"focus"` trigger so that touch and keyboard only ' +
+        'users can see the overlay as well.'
       );
 
       triggerProps.onMouseOver = createChainedFunction(

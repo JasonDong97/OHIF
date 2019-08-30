@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classnames from 'classnames';
 import { withTranslation } from '../utils/LanguageProvider';
-let onOverlayHide, onCineDialogOpen;
+
 export function ToolbarButton(props) {
-  const { isActive, icon, labelWhenActive, onClick, t} = props;
+  const { isActive, icon, labelWhenActive, onClick, t } = props;
   const className = classnames(props.className, { active: isActive });
   const iconProps = typeof icon === 'string' ? { name: icon } : icon;
   const label = isActive && labelWhenActive ? labelWhenActive : props.label;
@@ -16,20 +16,9 @@ export function ToolbarButton(props) {
   const arrowIcon = props.isExpandable && (
     <Icon name={arrowIconName} className="expand-caret" />
   );
-  if(props.onOverlayHide){
-    onOverlayHide = props.onOverlayHide;
-  }
-  if(props.onCineDialogOpen) {
-    onCineDialogOpen = props.onCineDialogOpen;
-  }
+
   const handleClick = event => {
     if (onClick) {
-      if(onOverlayHide && (props.label=='More' || props.label=='2D MPR')){
-        onOverlayHide();
-      }
-      if(onCineDialogOpen && props.label=='2D MPR'){
-        onCineDialogOpen();
-      }
       onClick(event, props);
     }
   };
@@ -65,7 +54,6 @@ ToolbarButton.propTypes = {
   /** Direction of expandable 'caret' symbol */
   isExpanded: PropTypes.bool,
   t: PropTypes.func.isRequired,
-  onOverlayHide: PropTypes.func,
 };
 
 ToolbarButton.defaultProps = {

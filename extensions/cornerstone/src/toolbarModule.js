@@ -30,7 +30,7 @@ const definitions = [
     id: 'StackScroll',
     label: 'Stack Scroll',
     icon: 'bars',
-    //
+    isDisplay: false,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'StackScroll' },
@@ -39,25 +39,42 @@ const definitions = [
     id: 'Zoom',
     label: 'Zoom',
     icon: 'search-plus',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Zoom' },
   },
   {
-    id: 'Wwwc',
+    id: 'WwwcMore',
     label: 'Levels',
     icon: 'level',
-    //
-    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-    commandName: 'setToolActive',
-    commandOptions: { toolName: 'Wwwc' },
+    isDisplay: true,
+    buttons:[
+      {
+        id: 'Wwwc',
+        label: 'Levels',
+        icon: 'level',
+        isDisplay: true,
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'Wwwc' },
+      },
+      {
+        id: 'WwwcRegion',
+        label: 'ROI Window',
+        icon: 'stop',
+        isDisplay: true,
+        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+        commandName: 'setToolActive',
+        commandOptions: { toolName: 'WwwcRegion' },
+      },
+    ]
   },
   {
     id: 'Pan',
     label: 'Pan',
     icon: 'arrows',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Pan' },
@@ -66,7 +83,7 @@ const definitions = [
     id: 'Length',
     label: 'Length',
     icon: 'measure-temp',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Length' },
@@ -75,7 +92,7 @@ const definitions = [
     id: 'Angle',
     label: 'Angle',
     icon: 'angle-left',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'setToolActive',
     commandOptions: { toolName: 'Angle' },
@@ -84,23 +101,15 @@ const definitions = [
     id: 'ReferenceLines',
     label: 'Reference Lines',
     icon: 'reference-line',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'referenceViewport',
-  },
-  {
-    id: 'Reset',
-    label: 'Reset',
-    icon: 'reset',
-    //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
-    commandName: 'resetViewport',
   },
   {
     id: 'Cine',
     label: 'CINE',
     icon: 'youtube',
-    //
+    isDisplay: true,
     type: TOOLBAR_BUTTON_TYPES.BUILT_IN,
     options: {
       behavior: 'CINE',
@@ -110,30 +119,23 @@ const definitions = [
     id: 'More',
     label: 'More',
     icon: 'ellipse-circle',
+    isDisplay: true,
+    isExpanded: true,
     buttons: [
       {
         id: 'Magnify',
         label: 'Magnify',
         icon: 'circle',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
         commandOptions: { toolName: 'Magnify' },
       },
       {
-        id: 'WwwcRegion',
-        label: 'ROI Window',
-        icon: 'stop',
-        //
-        type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
-        commandName: 'setToolActive',
-        commandOptions: { toolName: 'WwwcRegion' },
-      },
-      {
         id: 'DragProbe',
         label: 'Probe',
         icon: 'dot-circle',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
         commandOptions: { toolName: 'DragProbe' },
@@ -142,7 +144,7 @@ const definitions = [
         id: 'EllipticalRoi',
         label: 'Ellipse',
         icon: 'circle-o',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
         commandOptions: { toolName: 'EllipticalRoi' },
@@ -151,7 +153,7 @@ const definitions = [
         id: 'RectangleRoi',
         label: 'Rectangle',
         icon: 'square-o',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
         commandName: 'setToolActive',
         commandOptions: { toolName: 'RectangleRoi' },
@@ -160,7 +162,7 @@ const definitions = [
         id: 'Invert',
         label: 'Invert',
         icon: 'adjust',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'invertViewport',
       },
@@ -168,7 +170,7 @@ const definitions = [
         id: 'RotateRight',
         label: 'Rotate Right',
         icon: 'rotate-right',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'rotateViewportCW',
       },
@@ -176,7 +178,7 @@ const definitions = [
         id: 'FlipH',
         label: 'Flip H',
         icon: 'ellipse-h',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'flipViewportHorizontal',
       },
@@ -184,15 +186,23 @@ const definitions = [
         id: 'FlipV',
         label: 'Flip V',
         icon: 'ellipse-v',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'flipViewportVertical',
+      },
+      {
+        id: 'Reset',
+        label: 'Reset',
+        icon: 'reset',
+        isDisplay: true,
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'resetViewport',
       },
       {
         id: 'Clear',
         label: 'Clear',
         icon: 'trash',
-        //
+        isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'clearAnnotations',
       },

@@ -175,12 +175,15 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
       isShowExit: true
     });
   }
-  toolbarButtons.forEach(tmp=>{
-    if(tmp.buttons && tmp.buttons.length){
-      tmp.buttons.forEach(e=>btns.push(e));
+  toolbarButtons.forEach(btn=> {
+    if(btn.buttons && btn.buttons.length){
+      btn.buttons = btn.buttons.filter(x=>x.isDisplay);
+      if(btn.isExpanded){
+        btn.buttons.forEach(e=>btns.push(e));
+      }
     }
-    if(tmp.id!='StackScroll' && tmp.id!="More"){
-      btns.push(tmp);
+    if(btn.isDisplay && !btn.isExpanded){
+      btns.push(btn)
     }
   });
   return btns.map((button, index) => {
@@ -197,7 +200,7 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
 
         return childButton;
       });
-
+      console.log(button)
       return (
         <ExpandableToolMenu
           key={button.id}
