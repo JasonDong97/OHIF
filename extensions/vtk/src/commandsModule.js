@@ -12,6 +12,7 @@ import vtkCoordinate from 'vtk.js/Sources/Rendering/Core/Coordinate';
 import vtkMath from 'vtk.js/Sources/Common/Core/Math';
 import vtkMatrixBuilder from 'vtk.js/Sources/Common/Core/MatrixBuilder';
 import Constants from 'vtk.js/Sources/Rendering/Core/VolumeMapper/Constants.js';
+import cornerstoneTools from 'cornerstone-tools';
 
 const { BlendMode } = Constants;
 
@@ -137,6 +138,9 @@ function switchMPRInteractors(api, istyle) {
   }
 }
 
+function disabledReferenceLinesTool() {
+  cornerstoneTools.setToolDisabled('ReferenceLines')
+}
 const actions = {
   axial: async ({ viewports }) => {
     const api = await _getActiveViewportVTKApi(viewports);
@@ -236,6 +240,7 @@ const actions = {
 
     let apiByViewport;
     try {
+      disabledReferenceLinesTool();
       apiByViewport = await setMPRLayout(displaySet);
     } catch (error) {
       throw new Error(error);

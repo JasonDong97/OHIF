@@ -90,10 +90,10 @@ class ToolbarRow extends Component {
   componentDidUpdate(prevProps) {
     if(window.handleMPRTime){return}
     const activeContexts = this.props.activeContexts;
-    const activeContextsChanged =
-      prevProps.activeContexts !== activeContexts;
+    const activeContextsChanged = JSON.stringify(prevProps.activeContexts) !== JSON.stringify(activeContexts);
     if (activeContextsChanged) {
       this.setState({
+        activeButtons: [],
         toolbarButtons: _getVisibleToolbarButtons.call(this),
         isShowExit: activeContexts.findIndex((x)=>x==VTK)>-1
       });

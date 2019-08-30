@@ -2,7 +2,6 @@ import cornerstone from 'cornerstone-core';
 import cornerstoneTools from 'cornerstone-tools';
 import OHIF from '@ohif/core';
 const scroll = cornerstoneTools.import('util/scroll');
-
 const actions = {
   rotateViewport: ({ viewports, rotation }) => {
     const enabledElement = _getActiveViewportEnabledElement(
@@ -85,6 +84,7 @@ const actions = {
     if (!toolName) {
       console.warn('No toolname provided to setToolActive command');
     }
+    disabledReferenceLinesTool();
     cornerstoneTools.setToolActive(toolName, { mouseButtonMask: 1 });
   },
   updateViewportDisplaySet: ({ direction }) => {
@@ -92,6 +92,7 @@ const actions = {
     console.warn('updateDisplaySet: ', direction);
   },
   clearAnnotations: ({ viewports }) => {
+
     const element = _getActiveViewportEnabledElement(
       viewports.viewportSpecificData,
       viewports.activeViewportIndex
@@ -145,6 +146,7 @@ const actions = {
         },
       });
     });
+    disabledReferenceLinesTool();
   },
   nextImage: ({ viewports }) => {
     const enabledElement = _getActiveViewportEnabledElement(
@@ -163,14 +165,41 @@ const actions = {
     scroll(enabledElement, -1);
   },
   referenceViewport:({ viewports }) => {
-    const enabledElement = _getActiveViewportEnabledElement(
-      viewports.viewportSpecificData,
-      viewports.activeViewportIndex
-    );
-
-    if (enabledElement) {
-      cornerstone.reset(enabledElement);
+    let elements = [],
+      numImagesLoaded = 0,
+      viewportSpecificData = viewports.viewportSpecificData;
+    if(viewportSpecificData.length < 2){
+      throw new Error('当前窗口不支持定位线功能.')
+      return false
     }
+    for(let key in viewportSpecificData){
+      let element = _getActiveViewportEnabledElement(viewportSpecificData, key);
+      elements.push(element)
+    }
+    const addReferenceLinesTool=()=>{
+      const synchronizer = new cornerstoneTools.Synchronizer(
+        'cornerstonenewimage',
+        cornerstoneTools.updateImageSynchronizer
+      );
+      // These have to be added to our synchronizer before we pass it to our tool
+      elements.forEach(element=>{
+        synchronizer.add(element);
+      })
+      cornerstoneTools.addTool(cornerstoneTools.ReferenceLinesTool);
+      cornerstoneTools.setToolEnabled('ReferenceLines', {
+        synchronizationContext: synchronizer,
+      });
+    }
+    const handleImageRendered = (evt) => {
+      evt.detail.element.removeEventListener('cornerstoneimagerendered', handleImageRendered)
+      numImagesLoaded++;
+      if(numImagesLoaded === elements.length){
+        addReferenceLinesTool();
+      }
+    }
+    elements.forEach(element=>{
+      element.addEventListener('cornerstoneimagerendered', handleImageRendered);
+    })
   },
 };
 
@@ -268,7 +297,9 @@ function _getActiveViewportEnabledElement(viewports, activeIndex) {
   const activeViewport = viewports[activeIndex] || {};
   return activeViewport.dom;
 }
-
+function disabledReferenceLinesTool() {
+ cornerstoneTools.setToolDisabled('ReferenceLines')
+}
 export default {
   actions,
   definitions,

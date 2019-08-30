@@ -85,7 +85,7 @@ const definitions = [
     label: 'Reference Lines',
     icon: 'reference-line',
     //
-    type: TOOLBAR_BUTTON_TYPES.COMMAND,
+    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'referenceViewport',
   },
   {
