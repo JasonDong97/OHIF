@@ -176,6 +176,7 @@ const actions = {
       let element = _getActiveViewportEnabledElement(viewportSpecificData, key);
       elements.push(element)
     }
+    elements = elements.filter(element=>!!element);
     const addReferenceLinesTool=()=>{
       const synchronizer = new cornerstoneTools.Synchronizer(
         'cornerstonenewimage',
