@@ -81,6 +81,8 @@ import user from './icons/user.svg';
 import youtube from './icons/youtube.svg';
 import exit from './icons/exit.svg';
 import referenceLines from './icons/reference-line.svg';
+import abdomen from './icons/abdomen.svg';
+import bone from './icons/bone.svg';
 const ICONS = {
   user,
   sort,
@@ -162,7 +164,9 @@ const ICONS = {
   lung,
   liver,
   exit,
-  'reference-line': referenceLines
+  'reference-line': referenceLines,
+  abdomen,
+  bone
 };
 
 /**

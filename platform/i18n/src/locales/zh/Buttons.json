@@ -46,5 +46,11 @@
   "Increase Slab Thickness": "增加层厚",
   "Decrease Slab Thickness": "减少层厚",
   "Exit": "退出",
-  "Reference Lines": "定位线"
+  "Reference Lines": "定位线",
+  "Brain": "脑部",
+  "Liver": "肝部",
+  "Lung": "肺部",
+  "Soft Tissue": "软组织",
+  "Bone": "骨骼",
+  "Abdomen": "腹部"
 }

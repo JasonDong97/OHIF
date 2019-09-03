@@ -200,7 +200,6 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
 
         return childButton;
       });
-      console.log(button)
       return (
         <ExpandableToolMenu
           key={button.id}

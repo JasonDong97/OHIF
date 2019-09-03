@@ -80,12 +80,28 @@ const actions = {
   },
   // TODO: this is receiving `evt` from `ToolbarRow`. We could use it to have
   //       better mouseButtonMask sets.
-  setToolActive: ({ toolName }) => {
+  setToolActive: ({ toolName, type, viewports}) => {
     if (!toolName) {
       console.warn('No toolname provided to setToolActive command');
     }
     disabledReferenceLinesTool();
     cornerstoneTools.setToolActive(toolName, { mouseButtonMask: 1 });
+    if(toolName == 'Wwwc' || toolName == 'WwwcRegion'){
+      const enabledElement = _getActiveViewportEnabledElement(
+        viewports.viewportSpecificData,
+        viewports.activeViewportIndex
+      );
+      if (enabledElement) {
+        if(type) {
+          let viewport = cornerstone.getViewport(enabledElement);
+          viewport.voi.windowWidth = strategies[type].windowWidth;
+          viewport.voi.windowCenter = strategies[type].windowCenter;
+          cornerstone.setViewport(enabledElement, viewport);
+        }else{
+          cornerstone.reset(enabledElement);
+        }
+      }
+    }
   },
   updateViewportDisplaySet: ({ direction }) => {
     // TODO
@@ -167,8 +183,10 @@ const actions = {
   referenceViewport:({ viewports }) => {
     let elements = [],
       numImagesLoaded = 0,
-      viewportSpecificData = viewports.viewportSpecificData;
-    if(viewportSpecificData.length < 2){
+      viewportSpecificData = viewports.viewportSpecificData,
+      _length = Object.keys(viewportSpecificData).length;
+
+    if(!_length || _length < 2){
       throw new Error('当前窗口不支持定位线功能.')
       return false
     }
@@ -280,7 +298,7 @@ const definitions = {
   // TOOLS
   setToolActive: {
     commandFn: actions.setToolActive,
-    storeContexts: [],
+    storeContexts: ['viewports'],
     options: {},
   },
   referenceViewport: {
@@ -289,6 +307,28 @@ const definitions = {
     options: {},
   },
 };
+const strategies = {
+  "brain": {
+    windowWidth: 35,
+    windowCenter: 80
+  },
+  "lung": {
+    windowWidth: -600,
+    windowCenter: 1200
+  },
+  "abdomen": {
+    windowWidth: 45,
+    windowCenter: 300
+  },
+  "bone": {
+    windowWidth: 300,
+    windowCenter: 1200
+  },
+  "soft-tissue": {
+    windowWidth: 50,
+    windowCenter: 350
+  },
+}
 
 /**
  * Grabs `dom` reference for the enabledElement of
@@ -299,7 +339,7 @@ function _getActiveViewportEnabledElement(viewports, activeIndex) {
   return activeViewport.dom;
 }
 function disabledReferenceLinesTool() {
- cornerstoneTools.setToolDisabled('ReferenceLines')
+  cornerstoneTools.setToolDisabled('ReferenceLines')
 }
 export default {
   actions,
