@@ -4,9 +4,11 @@ import classnames from 'classnames';
 import { Icon } from './../../elements/Icon';
 import './RoundedButtonGroup.css';
 
+const isMobile = window.info.isMobile;
+
 // TODO: Rename to Toggle?
 class RoundedButtonGroup extends Component {
-  static className = 'RoundedButtonGroup';
+  static className = `RoundedButtonGroup${isMobile?'-mobile':''}`;
 
   static propTypes = {
     options: PropTypes.arrayOf(

@@ -11,6 +11,7 @@ if (process && process.env && process.env.PUBLIC_URL) {
 }
 
 window.info = {
+  isMobile: /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent),
   version,
   homepage,
 };

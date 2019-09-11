@@ -18,6 +18,7 @@
 //  -- ACTIVE_VIEWPORT::CORNERSTONE
 // setToolActive commands should receive the button event that triggered
 // so we can do the "bind to this button" magic
+const isMobile = window.info.isMobile;
 
 const TOOLBAR_BUTTON_TYPES = {
   COMMAND: 'command',
@@ -45,14 +46,23 @@ const definitions = [
     commandOptions: { toolName: 'Zoom' },
   },
   {
-    id: 'WwwcMore',
+    id: 'Wwwc',
     label: 'Levels',
     icon: 'level',
-    isDisplay: true,
+    isDisplay: isMobile,
+    type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
+    commandName: 'setToolActive',
+    commandOptions: { toolName: 'Wwwc' },
+  },
+  {
+    id: 'WwwcMore',
+    label: 'WWWC',
+    icon: 'level',
+    isDisplay: !isMobile,
     buttons:[
       {
         id: 'Wwwc',
-        label: 'Levels',
+        label: 'WWWC',
         icon: 'level',
         isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
@@ -146,7 +156,7 @@ const definitions = [
     id: 'ReferenceLines',
     label: 'Reference Lines',
     icon: 'reference-line',
-    isDisplay: true,
+    isDisplay: !isMobile,
     type: TOOLBAR_BUTTON_TYPES.SET_TOOL_ACTIVE,
     commandName: 'referenceViewport',
   },
@@ -236,20 +246,20 @@ const definitions = [
         commandName: 'flipViewportVertical',
       },
       {
-        id: 'Reset',
-        label: 'Reset',
-        icon: 'reset',
-        isDisplay: true,
-        type: TOOLBAR_BUTTON_TYPES.COMMAND,
-        commandName: 'resetViewport',
-      },
-      {
         id: 'Clear',
         label: 'Clear',
         icon: 'trash',
         isDisplay: true,
         type: TOOLBAR_BUTTON_TYPES.COMMAND,
         commandName: 'clearAnnotations',
+      },
+      {
+        id: 'Reset',
+        label: 'Reset',
+        icon: 'reset',
+        isDisplay: true,
+        type: TOOLBAR_BUTTON_TYPES.COMMAND,
+        commandName: 'resetViewport',
       },
     ],
   },

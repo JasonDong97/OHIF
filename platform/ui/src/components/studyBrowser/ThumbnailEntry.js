@@ -38,7 +38,7 @@ class ThumbnailEntry extends Component {
     let viewportSpecificData = state.viewports.viewportSpecificData && state.viewports.viewportSpecificData[0] || {};
     active = viewportSpecificData.seriesNumber == this.props.seriesNumber &&
       viewportSpecificData.displaySetInstanceUid == this.props.displaySetInstanceUid;
-    let className = classnames('ThumbnailEntry noselect', {
+    let className = classnames(`ThumbnailEntry${window.info.isMobile?'-mobile' : ''} noselect`, {
       active: active,
     });
     const infoOnly = false;

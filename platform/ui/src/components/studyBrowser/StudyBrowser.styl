@@ -33,6 +33,39 @@
         -webkit-user-select: none; /* Chrome, Safari, and Opera */
         -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 
+.StudyBrowser-mobile
+  float: left
+  height: 100%
+  width: 100%
+  overflow: hidden
+  background-color: black
+  padding-bottom: 20px
+  padding-top: 10px
+
+  .scrollable-study-thumbnails
+    height: 100%
+    overflow-y: auto
+    overflow-x: hidden
+    //padding-bottom: 50px
+    //padding-right: 16px
+    //padding-left: 4px
+    //margin-right: -16px
+
+    display: flex;
+    flex-direction: column;
+
+    &::-webkit-scrollbar
+      display: none
+
+    .ThumbnailEntryContainer
+      width: 100%;
+
+      .noselect
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer */
+        -khtml-user-select: none; /* KHTML browsers (e.g. Konqueror) */
+        -webkit-user-select: none; /* Chrome, Safari, and Opera */
+        -webkit-touch-callout: none; /* Disable Android and iOS callouts*/
 
 .draggable
   cursor: copy

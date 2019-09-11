@@ -16,6 +16,7 @@ import OHIF, { MODULE_TYPES } from '@ohif/core';
 import PropTypes from 'prop-types';
 import { withTranslation } from 'react-i18next';
 const VTK = "ACTIVE_VIEWPORT::VTK";
+const isMobile = window.info.isMobile;
 class ToolbarRow extends Component {
   // TODO: Simplify these? isOpen can be computed if we say "any" value for selected,
   // closed if selected is null/undefined
@@ -115,14 +116,27 @@ class ToolbarRow extends Component {
     };
 
     const onPress = (side, value) => {
+      if(isMobile){
+        this.setState({
+          isCineDialogOpen: false
+        })
+      }
       this.props.handleSidePanelChange(side, value);
     };
     const onPressLeft = onPress.bind(this, 'left');
     const onPressRight = onPress.bind(this, 'right');
+    const styles = isMobile ?
+      {
+        padding: '5px',
+        position: 'fixed',
+        left: 0,
+        backgroundColor: '#000'
+      }
+      : { padding: '10px' };
     return (
       <>
-        <div className="ToolbarRow">
-          <div className="pull-left m-t-1 p-y-1" style={{ padding: '10px' }}>
+        <div className={`ToolbarRow${isMobile?'-mobile':''}`}>
+          <div className="pull-left m-t-1 p-y-1 " style={styles}>
             <RoundedButtonGroup
               options={this.buttonGroups.left}
               value={this.props.selectedLeftSidePanel || ''}
@@ -130,30 +144,33 @@ class ToolbarRow extends Component {
             />
           </div>
           {buttonComponents}
-          {!this.state.isShowExit && (
+          {!this.state.isShowExit && !isMobile && (
             <ConnectedLayoutButton/>
           )}
-          {!this.state.isShowExit ?
+          {!isMobile && (!this.state.isShowExit ?
             <ConnectedPluginSwitch/>
             :
             <ConnectedExitButton onExit={()=>{
               this.setState({
                 isShowExit: false,
               });
-            }}/>
+            }}/>)
           }
-          <div
-            className="pull-right m-t-1 rm-x-1"
-            style={{ marginLeft: 'auto' }}
-          >
-            {this.buttonGroups.right.length && (
-              <RoundedButtonGroup
-                options={this.buttonGroups.right}
-                value={this.props.selectedRightSidePanel || ''}
-                onValueChanged={onPressRight}
-              />
-            )}
-          </div>
+
+          {!isMobile && (
+            <div
+              className="pull-right m-t-1 rm-x-1"
+              style={{ marginLeft: 'auto' }}
+            >
+              {this.buttonGroups.right.length && (
+                <RoundedButtonGroup
+                  options={this.buttonGroups.right}
+                  value={this.props.selectedRightSidePanel || ''}
+                  onValueChanged={onPressRight}
+                />
+              )}
+            </div>
+          )}
         </div>
         <div className="CineDialogContainer" style={cineDialogContainerStyle}>
           <ConnectedCineDialog isPlaying={this.state.isCineDialogOpen}/>
@@ -215,6 +232,7 @@ function _getButtonComponents(toolbarButtons, activeButtons) {
         key={button.id}
         label={button.label}
         icon={button.icon}
+        marginLeft={index ? 0:'60px'}
         onClick={_handleToolbarButtonClick.bind(this, button)}
         onCineDialogOpen={_handleCineDialog}
         isActive={activeButtons.includes(button.id)}
@@ -245,6 +263,7 @@ function _handleToolbarButtonClick(button, evt, props) {
       activeButtons: [button.id],
     });
   } else if (button.type === 'builtIn') {
+    if(isMobile && this.props.isLeftSidePanelOpen) return;
     this._handleBuiltIn(button.options);
   }
 }

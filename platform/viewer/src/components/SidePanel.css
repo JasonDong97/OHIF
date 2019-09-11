@@ -30,6 +30,11 @@
   margin-right: 0;
   margin-left: 0;
 }
+.sidepanel-mobile.is-open {
+  margin-right: 0;
+  margin-left: 0;
+  width: 100%;
+}
 
 .main-content {
   flex: 1;
@@ -37,4 +42,24 @@
   overflow: hidden;
   transition: var(--sidepanel-transition);
   width: 100%;
+}
+.sidepanel-mobile{
+  width:0;
+  height: 100%;
+  transition: var(--sidepanel-transition);
+}
+.from-right-mobile {
+  max-width: 100%;
+}
+.from-left-mobile {
+  max-width: 100%;
+}
+.FlexboxLayout-mobile {
+  display: flex;
+  flex: 1;
+  flex-flow: row nowrap;
+  align-items: stretch;
+  height: calc(100% - var(--toolbar-height-mobile));
+  width: 100%;
+  overflow: hidden;
 }

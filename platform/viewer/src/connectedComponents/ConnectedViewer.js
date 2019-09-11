@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import Viewer from "./Viewer.js";
+import MobileViewer from './MobileViewer.js'
 import OHIF from "@ohif/core";
 
 const { setTimepoints, setMeasurements } = OHIF.redux.actions;
@@ -21,10 +22,10 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
-
+const Page =  window.info.isMobile ? MobileViewer : Viewer;
 const ConnectedViewer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Viewer);
+)(Page);
 
 export default ConnectedViewer;

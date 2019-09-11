@@ -6,6 +6,8 @@ import React from 'react';
 import classnames from 'classnames';
 import { withTranslation } from '../utils/LanguageProvider';
 
+const isMobile = window.info.isMobile;
+
 export function ToolbarButton(props) {
   const { isActive, icon, labelWhenActive, onClick, t } = props;
   const className = classnames(props.className, { active: isActive });
@@ -22,9 +24,10 @@ export function ToolbarButton(props) {
       onClick(event, props);
     }
   };
+  const styles= props.marginLeft && isMobile?{'marginLeft': props.marginLeft}:{};
 
   return (
-    <div className={className} onClick={handleClick}>
+    <div className={className} onClick={handleClick} style={styles}>
       {iconProps && <Icon {...iconProps} />}
       <div className="toolbar-button-label">
         {t(label)}
@@ -54,11 +57,14 @@ ToolbarButton.propTypes = {
   /** Direction of expandable 'caret' symbol */
   isExpanded: PropTypes.bool,
   t: PropTypes.func.isRequired,
+  marginLeft: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.number])
 };
 
 ToolbarButton.defaultProps = {
+  marginLeft: 0,
   isActive: false,
-  className: 'toolbar-button',
+  className: `toolbar-button${isMobile?'-mobile':''}`,
 };
 
 export default withTranslation('Buttons')(ToolbarButton);

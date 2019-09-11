@@ -13,7 +13,7 @@ class SidePanel extends Component {
   };
 
   render() {
-    const fromSideClass =
+    let fromSideClass =
       this.props.from === 'right' ? 'from-right' : 'from-left';
 
     const styles = this.props.width
@@ -24,11 +24,12 @@ class SidePanel extends Component {
             : Number.parseInt(this.props.width) * -1,
         }
       : {};
-
+    const classFlag = window.info.isMobile?'-mobile':'';
+    fromSideClass += classFlag;
     return (
       <section
         style={styles}
-        className={classNames('sidepanel', fromSideClass, {
+        className={classNames(`sidepanel${classFlag}`, fromSideClass, {
           'is-open': this.props.isOpen,
         })}
       >

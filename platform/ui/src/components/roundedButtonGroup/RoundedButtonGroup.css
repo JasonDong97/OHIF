@@ -1,4 +1,5 @@
-.RoundedButtonGroup {
+.RoundedButtonGroup,
+.RoundedButtonGroup-mobile{
   --height: 25px;
 
   position: relative;
@@ -19,7 +20,8 @@
   cursor: not-allowed;
 }
 
-.RoundedButtonGroup .roundedButtonWrapper .roundedButton {
+.RoundedButtonGroup .roundedButtonWrapper .roundedButton,
+.RoundedButtonGroup-mobile .roundedButtonWrapper .roundedButton{
   align-items: center;
   background-color: var(--ui-gray-dark);
   border: 2px solid var(--ui-border-color-dark);
@@ -35,6 +37,9 @@
   text-transform: uppercase;
   transition: var(--sidebar-transition);
   z-index: 1;
+}
+.RoundedButtonGroup-mobile .roundedButtonWrapper .roundedButton{
+  padding: 0 15px;
 }
 
 .roundedButtonWrapper
@@ -63,12 +68,14 @@
   margin-left: 0;
 }
 
-.RoundedButtonGroup .roundedButtonWrapper:first-child .roundedButton {
+.RoundedButtonGroup .roundedButtonWrapper:first-child .roundedButton,
+.RoundedButtonGroup-mobile .roundedButtonWrapper:first-child .roundedButton{
   border-bottom-left-radius: var(--height);
   border-top-left-radius: var(--height);
 }
 
-.RoundedButtonGroup .roundedButtonWrapper:last-child .roundedButton {
+.RoundedButtonGroup .roundedButtonWrapper:last-child .roundedButton,
+.RoundedButtonGroup-mobile .roundedButtonWrapper:last-child .roundedButton{
   border-bottom-right-radius: var(--height);
   border-top-right-radius: var(--height);
 }
@@ -84,3 +91,4 @@
   color: var(--ui-gray-dark);
   z-index: 2;
 }
+

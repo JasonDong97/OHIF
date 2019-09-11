@@ -16,6 +16,7 @@ class StudyBrowser extends Component {
     supportsDragAndDrop: PropTypes.bool.isRequired,
     setViewportSpecificData: PropTypes.func.isRequired,
     clearViewportSpecificData: PropTypes.func.isRequired,
+    handleSidePanelChange: PropTypes.func
   };
   findDisplaySet(studies, studyInstanceUid, displaySetInstanceUid) {
     const study = studies.find(study => {
@@ -38,13 +39,16 @@ class StudyBrowser extends Component {
       thumb.displaySetInstanceUid
     );
     this.props.setViewportSpecificData(activeViewportIndex, displaySet);
+    if(window.info.isMobile){
+      this.props.handleSidePanelChange('left', null)
+    }
   };
   render() {
     const studies = this.props.studies;
     const metas = this.props.metas;
     const thumbnails = studies.map((study, studyIndex) => {
       return study.thumbnails.map((thumb, thumbIndex) => {
-        if (this.props.supportsDragAndDrop) {
+        if (this.props.supportsDragAndDrop && !window.info.isMobile) {
           return (
             <ThumbnailEntryDragSource
               key={`${studyIndex}_${thumbIndex}`}
@@ -71,10 +75,9 @@ class StudyBrowser extends Component {
         }
       });
     });
-
     const components = thumbnails.flat();
     const studyInfo =()=>{
-      if (metas && metas.length){
+      if (metas && metas.length && !window.info.isMobile){
         return (
           <div className="studyInfo">
             <h2>{metas[0].patientName}</h2>
@@ -95,7 +98,7 @@ class StudyBrowser extends Component {
     return (
       <>
         {studyInfo()}
-        <div className="StudyBrowser">
+        <div className={`StudyBrowser${window.info.isMobile?'-mobile':''}`}>
           <div className="scrollable-study-thumbnails">{components}</div>
         </div>
       </>
